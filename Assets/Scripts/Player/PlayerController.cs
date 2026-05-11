@@ -1,13 +1,14 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private Transform cameraTransform;
-
+    [SerializeField] private Camera playerCam;
     [Header("Settings")]
     [SerializeField] private float speed = 10f;
     [SerializeField] private float gravity = -20f;
@@ -25,22 +26,37 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
+        if (!IsOwner) return;
         moveAction.action.Enable();
         jumpAction.action.Enable();
         lookAction.action.Enable();
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnDisable()
     {
+        if (!IsOwner) return;
         moveAction.action.Disable();
         jumpAction.action.Disable();
         lookAction.action.Disable();
-        Cursor.lockState = CursorLockMode.None;
     }
+    void Start()
+    {
+        if (IsOwner)
+        {
+            playerCam.GetComponent<AudioListener>().enabled = true;
+            playerCam.GetComponent<Camera>().enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
 
+        }
+        else
+        {
+            playerCam.GetComponent<AudioListener>().enabled = false;
+            playerCam.GetComponent<Camera>().enabled = false;
+        }
+    }
     void Update()
     {
+        if (!IsOwner) return;
         HandleRotation();
         HandleMovement();
     }
@@ -52,18 +68,18 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * lookInput.x * lookSensitivity);
 
         verticalRotation += lookInput.y * lookSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f); 
+        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
     void HandleMovement()
     {
         isGrounded = controller.isGrounded;
-        if (isGrounded && velocity.y < 0) velocity.y = -2f; 
+        if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
-        
+
         controller.Move(move * speed * Time.deltaTime);
 
         if (jumpAction.action.WasPressedThisFrame() && isGrounded)
