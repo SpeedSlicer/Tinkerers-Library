@@ -478,7 +478,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2.84
+  m_Height: 2.66
   m_Radius: 0.27
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -526,10 +526,11 @@ MonoBehaviour:
   controller: {fileID: 2233572412134828964}
   cameraTransform: {fileID: 5908367122620663796}
   playerCam: {fileID: 5453119301505539033}
-  speed: 10
+  speed: 5
   gravity: -20
   jumpHeight: 1.5
   lookSensitivity: 0.1
+  isGrounded: 0
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   lookAction: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -568,7 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Multiplayer.Center.NetcodeForGameObjectsExample::Unity.Multiplayer.Center.NetcodeForGameObjectsExample.ClientNetworkTransform
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkTransformExpanded: 0
+  NetworkTransformExpanded: 1
   AutoOwnerAuthorityTickOffset: 1
   PositionInterpolationType: 0
   RotationInterpolationType: 0

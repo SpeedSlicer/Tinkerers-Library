@@ -1,3 +1,5 @@
+using System;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,14 +18,15 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float lookSensitivity = 0.1f;
 
     private Vector3 velocity;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     private float verticalRotation = 0f;
 
     [Header("Input Actions")]
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference jumpAction;
     [SerializeField] InputActionReference lookAction;
-
+    private bool wasGrounded;
+    Animator anim;
     void OnEnable()
     {
         if (!IsOwner) return;
@@ -41,12 +44,12 @@ public class PlayerController : NetworkBehaviour
     }
     void Start()
     {
+        anim = GetComponent<Animator>();
         if (IsOwner)
         {
             playerCam.GetComponent<AudioListener>().enabled = true;
             playerCam.GetComponent<Camera>().enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
-
         }
         else
         {
@@ -74,6 +77,7 @@ public class PlayerController : NetworkBehaviour
 
     void HandleMovement()
     {
+        wasGrounded = isGrounded;
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
@@ -83,9 +87,18 @@ public class PlayerController : NetworkBehaviour
         controller.Move(move * speed * Time.deltaTime);
 
         if (jumpAction.action.WasPressedThisFrame() && isGrounded)
+        {
+            anim.SetBool("isJumping", true);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        anim.SetBool("isRunning", math.abs(moveInput.magnitude) > 0);
+        if (!wasGrounded && isGrounded)
+        {
+            anim.SetBool("isJumping", false);
+        }
     }
 }
