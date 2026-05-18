@@ -454,6 +454,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2890122807289535486}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7062540539297880903}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5935022071201869385}
   m_SourcePrefab: {fileID: 100100000, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
 --- !u!1 &150995188336085195 stripped
 GameObject:
@@ -478,7 +484,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2.66
+  m_Height: 2.5
   m_Radius: 0.27
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -602,6 +608,38 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-7062540539297880903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150995188336085195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16c486fbe0aa944fa697ab8d79654e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &-5935022071201869385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150995188336085195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8de02eb958df745a005695fb24a994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemLift
+  ShowTopMostFoldoutHeaderGroup: 1
+  cameraTransform: {fileID: 5451026192373740959}
+  pickupDistance: 3
+  pickupLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  pickupAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!4 &4500283278592710574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3507511702863995444, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
