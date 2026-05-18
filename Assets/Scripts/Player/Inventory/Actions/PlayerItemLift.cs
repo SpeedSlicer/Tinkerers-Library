@@ -26,7 +26,6 @@ public class PlayerItemLift : NetworkBehaviour
     }
     void Start()
     {
-        if (!IsOwner) return;
         playerInventory = this.GetComponent<PlayerInventory>();
     }
 
@@ -82,9 +81,9 @@ public class PlayerItemLift : NetworkBehaviour
                 if (x != null)
                 {
                     playerInventory.AddItemServerRpc(x.GetItemData());
-
                 }
-                targetObject.Despawn();
+                targetObject.Despawn(false);
+                Destroy(targetObject.gameObject);
             }
         }
     }

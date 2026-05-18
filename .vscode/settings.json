@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Tinkerers-Library.slnx",
+    "dotnet.defaultSolution": "Tinkerer's Library.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }

@@ -28,7 +28,7 @@ public class PlayerInventory : NetworkBehaviour
         Debug.Log($"Inventory updated. Type of change: {changeEvent.Type}");
     }
 
-    [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
+    [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
     public void AddItemServerRpc(NetworkInventoryItem nItem)
     {
         for (int i = 0; i < inventory.Count; i++)
