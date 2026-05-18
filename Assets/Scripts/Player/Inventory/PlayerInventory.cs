@@ -2,15 +2,14 @@ using System;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
-
 
 public class PlayerInventory : NetworkBehaviour
 {
     private readonly NetworkList<NetworkInventoryItem> inventory =
         new NetworkList<NetworkInventoryItem>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-    private readonly NetworkVariable<int> handItem = new NetworkVariable<int>(value: 0, readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
+    
+    private readonly NetworkVariable<int> handItem = 
+        new NetworkVariable<int>(value: 0, readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
 
     public override void OnNetworkSpawn()
     {
@@ -28,6 +27,22 @@ public class PlayerInventory : NetworkBehaviour
         Debug.Log($"Inventory updated. Type of change: {changeEvent.Type}");
     }
 
+    public void AddItemServerOnly(NetworkInventoryItem nItem)
+    {
+        if (!IsServer) return; 
+
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].ItemId == nItem.ItemId)
+            {
+                var item = inventory[i];
+                item.Quantity += nItem.Quantity;
+                inventory[i] = item;
+                return;
+            }
+        }
+        inventory.Add(nItem);
+    }
     [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
     public void AddItemServerRpc(NetworkInventoryItem nItem)
     {
@@ -38,7 +53,6 @@ public class PlayerInventory : NetworkBehaviour
                 var item = inventory[i];
                 item.Quantity += nItem.Quantity;
                 inventory[i] = item;
-
                 return;
             }
         }
@@ -46,7 +60,7 @@ public class PlayerInventory : NetworkBehaviour
         inventory.Add(nItem);
     }
 
-    [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
+    [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
     public void RemoveItemServerRpc(int itemId, int amount)
     {
         for (int i = 0; i < inventory.Count; i++)
@@ -68,7 +82,7 @@ public class PlayerInventory : NetworkBehaviour
         }
     }
 
-    [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
+    [ServerRpc(InvokePermission = RpcInvokePermission.Everyone)]
     public void SetItemSlotServerRpc(int targetedSlot)
     {
         handItem.Value = targetedSlot;

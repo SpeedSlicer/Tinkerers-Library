@@ -80,10 +80,9 @@ public class PlayerItemLift : NetworkBehaviour
                 var x = targetObject.GetComponent<ItemDataHandler>();
                 if (x != null)
                 {
-                    playerInventory.AddItemServerRpc(x.GetItemData());
+                    playerInventory.AddItemServerOnly(x.GetItemData());
                 }
-                targetObject.Despawn(false);
-                Destroy(targetObject.gameObject);
+                targetObject.Despawn(true);
             }
         }
     }
