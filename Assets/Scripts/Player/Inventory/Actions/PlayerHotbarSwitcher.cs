@@ -25,7 +25,7 @@ public class PlayerHotbarSwitcher : NetworkBehaviour
         if (!IsOwner) return;
         foreach (var x in hotbarActions)
         {
-            x.action.Enable();
+            x.action.Disable();
         }
     }
 

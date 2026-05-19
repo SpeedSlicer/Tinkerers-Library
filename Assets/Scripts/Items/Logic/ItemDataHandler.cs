@@ -59,7 +59,7 @@ public class ItemDataHandler : NetworkBehaviour
                     Destroy(collider.gameObject);
                 }
             }
-            Instantiate(visualAssetData.ItemMesh).transform.SetParent(this.transform, false);
+            Instantiate(visualAssetData.GroundItemMesh).transform.SetParent(this.transform, false);
         }
     }
 

@@ -1242,6 +1242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemRegistry
   items:
+  - {fileID: 11400000, guid: f15f29ae90154418c8b20cff359333dc, type: 2}
   - {fileID: 11400000, guid: acf10a9e967d7447d9bd5c1acb90d071, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

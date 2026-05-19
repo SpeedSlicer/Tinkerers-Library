@@ -9,14 +9,16 @@ public class ItemData : ScriptableObject
 
     [Header("Visuals")]
     [SerializeField] private Sprite icon;
-    [SerializeField] private GameObject itemMesh;
+    [SerializeField] private GameObject groundItemMesh;
+    [SerializeField] private GameObject handItemMesh;
+
 
     [Header("Gameplay")]
-    [SerializeField] private int maxStackSize = 99;
-
+    [SerializeField] private ItemTypes itemType = ItemTypes.Hand;
     public int ItemId => itemId;
     public string RegistryName => registryName;
     public Sprite Icon => icon;
-    public GameObject ItemMesh => itemMesh;
-    public int MaxStackSize => maxStackSize;
+    public GameObject GroundItemMesh => groundItemMesh;
+    public GameObject HandItemMesh => handItemMesh;
+    public ItemTypes ItemType => itemType;
 }

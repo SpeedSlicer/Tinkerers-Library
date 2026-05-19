@@ -583,9 +583,9 @@ Transform:
   m_GameObject: {fileID: 9096265347382222475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.18, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.007, y: 0.041, z: -0.121}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4500283278592710574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -599,15 +599,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.583355
+      value: 18.194723
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.46
+      value: -8.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.726341
+      value: -3.8248239
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalRotation.w
@@ -857,6 +857,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2718555287224060458}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8919696729625015882}
   m_SourcePrefab: {fileID: 100100000, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
 --- !u!1 &150995188336085195 stripped
 GameObject:
@@ -900,7 +903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1508579912
+  GlobalObjectIdHash: 3181209001
   InScenePlacedSourceGlobalObjectIdHash: 1508579912
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1018,6 +1021,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   ShowTopMostFoldoutHeaderGroup: 1
+  runTimeInventoryUpdateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  playerItemRenderer: {fileID: 0}
 --- !u!114 &-5935022071201869385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,6 +1072,19 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 4
   AnimatorParametersExpanded: 0
+--- !u!114 &8919696729625015882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150995188336085195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc3f981a08674551b5b532c21b5e965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemRenderer
+  parentHandTransform: {fileID: 9096265347382222475}
 --- !u!4 &672058883734278769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
