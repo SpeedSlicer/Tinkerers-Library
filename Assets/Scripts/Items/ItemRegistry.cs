@@ -14,7 +14,7 @@ public class ItemRegistry : MonoBehaviour
         Instance = this;
 
         itemLookup = new Dictionary<int, ItemData>();
-    // billy battista
+    // billy battista joke
         foreach (var item in items) // Iterate through the items array and add each item to the registry, while checking for null entries and duplicate IDs.
         {
             if (item == null) // Check for null entries in the items array. If a null entry is found, log a warning and skip it.
