@@ -2,165 +2,64 @@ using System;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Events;
-
+using System.Linq;
 public class PlayerInventory : NetworkBehaviour
 {
-    private readonly NetworkList<NetworkInventoryItem> inventory =
-        new NetworkList<NetworkInventoryItem>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-
-    private readonly NetworkVariable<int> handItem =
-        new NetworkVariable<int>(value: 0, readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-
-    [SerializeField] UnityEvent runTimeInventoryUpdateEvent;
-    [SerializeField] private PlayerItemRenderer playerItemRenderer;
-
-    public void Start()
+    NetworkList<NetworkInventoryItem> inventoryItems = new NetworkList<NetworkInventoryItem>();
+    void Start()
     {
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        inventory.OnListChanged += OnInventoryChanged;
-        handItem.OnValueChanged += OnHandValueChanged;
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        inventory.OnListChanged -= OnInventoryChanged;
-        handItem.OnValueChanged -= OnHandValueChanged;
-        base.OnNetworkDespawn();
-    }
-
-    private void OnHandValueChanged(int previousValue, int newValue)
-    {
-        Debug.Log($"Hand item changed from slot {previousValue} to slot {newValue}");
-        ReloadHandItem();
-    }
-    private void ReloadHandItem()
-    {
-        if (handItem.Value >= 0 && handItem.Value < inventory.Count && inventory[handItem.Value].ItemId != 0)
+        if (!IsOwner) return;
+        for (int i = 0; i < 9; i++)
         {
-            playerItemRenderer.UpdateHandItem(inventory[handItem.Value].ItemId);
-        }
-        else
-        {
-            playerItemRenderer.UpdateHandItem(0);
-        }
-    }
-
-    private void OnInventoryChanged(NetworkListEvent<NetworkInventoryItem> changeEvent)
-    {
-        Debug.Log($"Inventory updated. Type of change: {changeEvent.Type}");
-        ReloadHandItem();
-    }
-
-    [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
-    public void SwapItemsServerRpc(int fromSlot, int toSlot)
-    {
-        if (fromSlot < 0 || fromSlot >= inventory.Count || toSlot < 0 || toSlot >= inventory.Count)
-            return;
-
-        NetworkInventoryItem temp = inventory[fromSlot];
-        inventory[fromSlot] = inventory[toSlot];
-        inventory[toSlot] = temp;
-    }
-
-    public void AddItemServerOnly(NetworkInventoryItem nItem)
-    {
-        if (!IsServer) return;
-        ProcessAddItem(nItem);
-    }
-
-    [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
-    public void AddItemServerRpc(NetworkInventoryItem nItem)
-    {
-        ProcessAddItem(nItem);
-    }
-
-    private void ProcessAddItem(NetworkInventoryItem nItem)
-    {
-        int firstEmptyIndex = -1;
-
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].ItemId == nItem.ItemId)
-            {
-                var item = inventory[i];
-                item.Quantity += nItem.Quantity;
-                inventory[i] = item;
-                return;
-            }
-
-            if (firstEmptyIndex == -1 && inventory[i].ItemId == 0)
-            {
-                firstEmptyIndex = i;
-            }
-        }
-
-        if (firstEmptyIndex != -1)
-        {
-            inventory[firstEmptyIndex] = nItem;
+            inventoryItems.Add(new NetworkInventoryItem { ItemId = 0, Quantity = 0, ItemName = "" });
         }
     }
 
     [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
-    public void RemoveItemServerRpc(int itemId, int amount)
+    public void AddItemToInventoryServerRpc(NetworkInventoryItem itemToAdd)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        ItemData itemData = ItemRegistry.Instance.GetItem(itemToAdd.ItemId);
+        if (itemData != null)
         {
-            if (inventory[i].ItemId == itemId)
+            if (itemData.IsStackable)
             {
-                var item = inventory[i];
-                item.Quantity -= amount;
-
-                if (item.Quantity <= 0)
+                int existingIndex = -1;
+                for (int i = 0; i < inventoryItems.Count; i++)
                 {
-                    inventory[i] = new NetworkInventoryItem { ItemId = 0, Quantity = 0 };
+                    if (inventoryItems[i].ItemId == itemToAdd.ItemId)
+                    {
+                        if (inventoryItems[i].Quantity + itemToAdd.Quantity > ItemRegistry.Instance.GetItem(itemToAdd.ItemId).MaxStackSize)
+                        {
+                            int overflow = (inventoryItems[i].Quantity + itemToAdd.Quantity) - ItemRegistry.Instance.GetItem(itemToAdd.ItemId).MaxStackSize;
+                            inventoryItems[i] = new NetworkInventoryItem
+                            {
+                                ItemId = itemToAdd.ItemId,
+                                Quantity = ItemRegistry.Instance.GetItem(itemToAdd.ItemId).MaxStackSize,
+                                ItemName = itemToAdd.ItemName
+                            };
+                            AddItemToInventoryServerRpc(new NetworkInventoryItem
+                            {
+                                ItemId = itemToAdd.ItemId,
+                                Quantity = overflow,
+                                ItemName = itemToAdd.ItemName
+                            });
+                            return;
+                        }
+                        existingIndex = i;
+                        break;
+                    }
                 }
-                else
+                if (existingIndex != -1)
                 {
-                    inventory[i] = item;
+                    NetworkInventoryItem existingItem = inventoryItems[existingIndex];
+                    existingItem.Quantity += itemToAdd.Quantity;
+                    inventoryItems[existingIndex] = existingItem;
+                    return;
                 }
-                return;
             }
+
+            inventoryItems.Add(itemToAdd);
         }
     }
-
-    [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
-    public void SetItemSlotServerRpc(int targetedSlot)
-    {
-        if (targetedSlot >= 0 && targetedSlot < inventory.Count)
-        {
-            handItem.Value = targetedSlot;
-        }
-    }
-    public ItemData GetItemInSlot(int id)
-    {
-        if (id < 0 || id >= inventory.Count)
-            return ItemRegistry.Instance.GetItem(0);
-
-        int itemId = inventory[id].ItemId;
-
-        if (itemId == 0)
-            return ItemRegistry.Instance.GetItem(0);
-
-        return ItemRegistry.Instance.GetItem(itemId);
-    }
-    public ItemData GetItemInHand()
-    {
-        if (handItem.Value < 0 || handItem.Value >= inventory.Count) return null;
-        int itemId = inventory[handItem.Value].ItemId;
-        return ItemRegistry.Instance.GetItem(itemId);
-    }
-
-    public int GetItemIDInHand()
-    {
-        if (handItem.Value < 0 || handItem.Value >= inventory.Count) return 0;
-        return inventory[handItem.Value].ItemId;
-    }
-    public int GetHandSlot()
-    {
-        return handItem.Value;
-    }
+ 
 }

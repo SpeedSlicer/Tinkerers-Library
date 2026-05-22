@@ -12,7 +12,8 @@ public class ItemData : ScriptableObject
     [SerializeField] private GameObject groundItemMesh;
     [SerializeField] private GameObject handItemMesh;
 
-
+    [SerializeField] private bool isStackable = true;   
+    [SerializeField] private int maxStackSize = 99;
     [Header("Gameplay")]
     [SerializeField] private ItemTypes itemType = ItemTypes.Hand;
     public int ItemId => itemId;
@@ -21,4 +22,7 @@ public class ItemData : ScriptableObject
     public GameObject GroundItemMesh => groundItemMesh;
     public GameObject HandItemMesh => handItemMesh;
     public ItemTypes ItemType => itemType;
+    public bool IsStackable => isStackable;
+    public int MaxStackSize => maxStackSize;
+
 }

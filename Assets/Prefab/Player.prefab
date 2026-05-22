@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &170623604753568579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2808241434338310350}
+  m_Layer: 0
+  m_Name: PlayerActions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2808241434338310350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170623604753568579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 672058883734278769}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &194149095390037330
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +42,6 @@ GameObject:
   - component: {fileID: 3074791733089329975}
   - component: {fileID: 6712903142621204085}
   - component: {fileID: 1081908739102277064}
-  - component: {fileID: 866455366363662979}
   m_Layer: 5
   m_Name: HotbarSlot4
   m_TagString: Untagged
@@ -78,24 +108,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &866455366363662979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194149095390037330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39944ce2949cb3d4d90cbd2b5ff68eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HotbarUIISlot
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerInventory: {fileID: -7062540539297880903}
-  activeFrame: {fileID: 5266103556965864065}
-  itemIcon: {fileID: 7341085576985379539}
-  id: -1
-  itemID: 0
 --- !u!1 &987378878002332018
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +194,6 @@ GameObject:
   - component: {fileID: 6833266077236804956}
   - component: {fileID: 1991032840231891478}
   - component: {fileID: 4692065692193047105}
-  - component: {fileID: 4237589521241820282}
   m_Layer: 5
   m_Name: HotbarSlot5
   m_TagString: Untagged
@@ -249,24 +260,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4237589521241820282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918689979122176187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39944ce2949cb3d4d90cbd2b5ff68eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HotbarUIISlot
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerInventory: {fileID: -7062540539297880903}
-  activeFrame: {fileID: 2482466751280487018}
-  itemIcon: {fileID: 3902486668881907214}
-  id: -1
-  itemID: 0
 --- !u!1 &2482466751280487018
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +501,6 @@ GameObject:
   - component: {fileID: 6421779229656644592}
   - component: {fileID: 2309940996939236662}
   - component: {fileID: 3670415049986963292}
-  - component: {fileID: 4907327194166439125}
   m_Layer: 5
   m_Name: HotbarSlot3
   m_TagString: Untagged
@@ -575,24 +567,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4907327194166439125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3012652324323533420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39944ce2949cb3d4d90cbd2b5ff68eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HotbarUIISlot
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerInventory: {fileID: -7062540539297880903}
-  activeFrame: {fileID: 4600342349864734094}
-  itemIcon: {fileID: 6679486692678625435}
-  id: -1
-  itemID: 0
 --- !u!1 &3706136053852657960
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +836,6 @@ GameObject:
   - component: {fileID: 5899987036977605162}
   - component: {fileID: 5037255897225339248}
   - component: {fileID: 1935001335477652733}
-  - component: {fileID: 1440104995402659059}
   m_Layer: 5
   m_Name: HotbarSlot2
   m_TagString: Untagged
@@ -929,24 +902,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1440104995402659059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4531938084831918513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39944ce2949cb3d4d90cbd2b5ff68eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HotbarUIISlot
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerInventory: {fileID: -7062540539297880903}
-  activeFrame: {fileID: 7307173654498291021}
-  itemIcon: {fileID: 7326156358119093914}
-  id: -1
-  itemID: 0
 --- !u!1 &4600342349864734094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,7 +1063,6 @@ GameObject:
   - component: {fileID: 600918139966777186}
   - component: {fileID: 3444531592464974162}
   - component: {fileID: 9046353736846677999}
-  - component: {fileID: 519596399809826945}
   m_Layer: 5
   m_Name: HotbarSlot1
   m_TagString: Untagged
@@ -1175,24 +1129,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &519596399809826945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5437378304131161975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39944ce2949cb3d4d90cbd2b5ff68eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HotbarUIISlot
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerInventory: {fileID: -7062540539297880903}
-  activeFrame: {fileID: 987378878002332018}
-  itemIcon: {fileID: 7452294597871710413}
-  id: -1
-  itemID: 0
 --- !u!1 &5522069497102177086
 GameObject:
   m_ObjectHideFlags: 0
@@ -2213,6 +2149,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       insertIndex: 0
+      addedObject: {fileID: 2808241434338310350}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      insertIndex: 1
       addedObject: {fileID: 2058219213781353381}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       insertIndex: -1
@@ -2241,25 +2180,10 @@ PrefabInstance:
       addedObject: {fileID: 2890122807289535486}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -7062540539297880903}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -5935022071201869385}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2718555287224060458}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8919696729625015882}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6898829016450292291}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7297121774428058009}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2465009714232180755}
   m_SourcePrefab: {fileID: 100100000, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
 --- !u!1 &150995188336085195 stripped
 GameObject:
@@ -2408,54 +2332,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-7062540539297880903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150995188336085195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16c486fbe0aa944fa697ab8d79654e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
-  ShowTopMostFoldoutHeaderGroup: 1
-  runTimeInventoryUpdateEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2465009714232180755}
-        m_TargetAssemblyTypeName: PlayerUIManager, Assembly-CSharp
-        m_MethodName: ReloadHotbar
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  playerItemRenderer: {fileID: 8919696729625015882}
---- !u!114 &-5935022071201869385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150995188336085195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e8de02eb958df745a005695fb24a994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemLift
-  ShowTopMostFoldoutHeaderGroup: 1
-  cameraTransform: {fileID: 5451026192373740959}
-  pickupDistance: 3
-  pickupLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  pickupAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &2718555287224060458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2484,20 +2360,6 @@ MonoBehaviour:
       Synchronize: 1
       ParameterType: 4
   AnimatorParametersExpanded: 0
---- !u!114 &8919696729625015882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150995188336085195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc3f981a08674551b5b532c21b5e965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerItemRenderer
-  parentHandTransform: {fileID: 9096265347382222475}
-  playerInventory: {fileID: -7062540539297880903}
 --- !u!114 &6898829016450292291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2511,43 +2373,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerOnLoadSpawn
   ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &7297121774428058009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150995188336085195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b68ff451f96e13549a25d72d5f388ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHotbarSwitcher
-  ShowTopMostFoldoutHeaderGroup: 1
-  hotbarActions:
-  - {fileID: 1318710160239809331, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  - {fileID: 8507515837805758392, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  playerInventory: {fileID: -7062540539297880903}
---- !u!114 &2465009714232180755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150995188336085195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 873c199e331e84bbf89cf4b10b5cdbf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerUIManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerUICanvas: {fileID: 3706136053852657960}
-  hotbarUIISlots:
-  - {fileID: 519596399809826945}
-  - {fileID: 1440104995402659059}
-  - {fileID: 4907327194166439125}
-  - {fileID: 866455366363662979}
-  - {fileID: 4237589521241820282}
 --- !u!4 &672058883734278769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
