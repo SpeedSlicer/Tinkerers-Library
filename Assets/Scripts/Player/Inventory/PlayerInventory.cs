@@ -6,16 +6,13 @@ using UnityEngine.Events;
 
 public class PlayerInventory : NetworkBehaviour
 {
-    private const int INVENTORY_SIZE = 32;
-
     private readonly NetworkList<NetworkInventoryItem> inventory =
         new NetworkList<NetworkInventoryItem>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-    
-    private readonly NetworkVariable<int> handItem = 
-        new NetworkVariable<int>(value: 0, readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-    
-    public UnityEvent runTimeInventoryUpdateEvent;
 
+    private readonly NetworkVariable<int> handItem =
+        new NetworkVariable<int>(value: 0, readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
+
+    [SerializeField] UnityEvent runTimeInventoryUpdateEvent;
     [SerializeField] private PlayerItemRenderer playerItemRenderer;
 
     public void Start()
@@ -26,14 +23,6 @@ public class PlayerInventory : NetworkBehaviour
     {
         inventory.OnListChanged += OnInventoryChanged;
         handItem.OnValueChanged += OnHandValueChanged;
-
-        if (IsServer && inventory.Count == 0)
-        {
-            for (int i = 0; i < INVENTORY_SIZE; i++)
-            {
-                inventory.Add(new NetworkInventoryItem { ItemId = 0, Quantity = 0 });
-            }
-        }
     }
 
     public override void OnNetworkDespawn()
@@ -42,13 +31,12 @@ public class PlayerInventory : NetworkBehaviour
         handItem.OnValueChanged -= OnHandValueChanged;
         base.OnNetworkDespawn();
     }
-    
+
     private void OnHandValueChanged(int previousValue, int newValue)
     {
         Debug.Log($"Hand item changed from slot {previousValue} to slot {newValue}");
         ReloadHandItem();
     }
-
     private void ReloadHandItem()
     {
         if (handItem.Value >= 0 && handItem.Value < inventory.Count && inventory[handItem.Value].ItemId != 0)
@@ -57,21 +45,20 @@ public class PlayerInventory : NetworkBehaviour
         }
         else
         {
-             playerItemRenderer.UpdateHandItem(0);
+            playerItemRenderer.UpdateHandItem(0);
         }
     }
 
     private void OnInventoryChanged(NetworkListEvent<NetworkInventoryItem> changeEvent)
     {
         Debug.Log($"Inventory updated. Type of change: {changeEvent.Type}");
-        runTimeInventoryUpdateEvent?.Invoke();
         ReloadHandItem();
     }
 
     [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
     public void SwapItemsServerRpc(int fromSlot, int toSlot)
     {
-        if (fromSlot < 0 || fromSlot >= inventory.Count || toSlot < 0 || toSlot >= inventory.Count) 
+        if (fromSlot < 0 || fromSlot >= inventory.Count || toSlot < 0 || toSlot >= inventory.Count)
             return;
 
         NetworkInventoryItem temp = inventory[fromSlot];
@@ -81,7 +68,7 @@ public class PlayerInventory : NetworkBehaviour
 
     public void AddItemServerOnly(NetworkInventoryItem nItem)
     {
-        if (!IsServer) return; 
+        if (!IsServer) return;
         ProcessAddItem(nItem);
     }
 
@@ -148,7 +135,18 @@ public class PlayerInventory : NetworkBehaviour
             handItem.Value = targetedSlot;
         }
     }
+    public ItemData GetItemInSlot(int id)
+    {
+        if (id < 0 || id >= inventory.Count)
+            return ItemRegistry.Instance.GetItem(0);
 
+        int itemId = inventory[id].ItemId;
+
+        if (itemId == 0)
+            return ItemRegistry.Instance.GetItem(0);
+
+        return ItemRegistry.Instance.GetItem(itemId);
+    }
     public ItemData GetItemInHand()
     {
         if (handItem.Value < 0 || handItem.Value >= inventory.Count) return null;
@@ -160,5 +158,9 @@ public class PlayerInventory : NetworkBehaviour
     {
         if (handItem.Value < 0 || handItem.Value >= inventory.Count) return 0;
         return inventory[handItem.Value].ItemId;
+    }
+    public int GetHandSlot()
+    {
+        return handItem.Value;
     }
 }

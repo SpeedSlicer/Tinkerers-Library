@@ -1,16 +1,33 @@
 using UnityEngine;
-
-public class PlayerUIManager : MonoBehaviour
+using System.Linq;
+using Unity.Mathematics;
+using Unity.Netcode;
+using System.Collections.Generic;
+public class PlayerUIManager : NetworkBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] GameObject playerUICanvas;
+    [SerializeField] List<HotbarUIISlot> hotbarUIISlots = new List<HotbarUIISlot>();
     void Start()
     {
-        
+        if (!IsOwner)
+        {
+            playerUICanvas.SetActive(false);
+            return;
+        }
+        foreach (var slot in hotbarUIISlots)
+        {
+            slot.SetHotbarID(hotbarUIISlots.IndexOf(slot));
+        }
+        ReloadHotbar();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+    }
+    public void ReloadHotbar()
+    {
+        foreach (var slot in hotbarUIISlots)
+        {
+            slot.ReloadSprite();
+        }
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: 0
   registryName: hand
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: dfd26f61ea386a04ea1e66c0aef159ba, type: 3}
   groundItemMesh: {fileID: 3863084638374903777, guid: 541caa8b376864f9098ded9a54acfe13, type: 3}
   handItemMesh: {fileID: 3863084638374903777, guid: 541caa8b376864f9098ded9a54acfe13, type: 3}
   itemType: 1
