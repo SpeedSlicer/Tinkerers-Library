@@ -11,6 +11,7 @@ public class PlayerActionBehaviour : NetworkBehaviour
             Debug.LogWarning("PlayerActionBehaviour: Components already linked. Possible cheater");
             return;
         }
+        Debug.Log("Linked Components");
         playerInventory = inventory;
         playerController = controller;
     }

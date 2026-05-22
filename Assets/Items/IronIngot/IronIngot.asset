@@ -17,4 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 904cc63a2b925d74997b13701a602430, type: 3}
   groundItemMesh: {fileID: 6370629664576190606, guid: 611e1e5d6a0e34e9ab685a08f4dff8f6, type: 3}
   handItemMesh: {fileID: 8312069361322945491, guid: 28ed766b1378548cf959bf2dacbd91a1, type: 3}
+  isStackable: 1
+  maxStackSize: 2
   itemType: 0

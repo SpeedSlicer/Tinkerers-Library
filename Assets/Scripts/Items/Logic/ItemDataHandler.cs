@@ -67,4 +67,20 @@ public class ItemDataHandler : NetworkBehaviour
     {
         return itemNetVar.Value;
     }
+
+    public void SetItemDataServer(NetworkInventoryItem item)
+    {
+        if (!IsServer) return;
+        itemNetVar.Value = item;
+        RefreshVisuals(item);
+    }
+
+    public void Destroy()
+    {
+        if (IsServer)
+        {
+            this.GetComponent<NetworkObject>().Despawn(false);
+            Destroy(this);
+        }
+    }
 }
