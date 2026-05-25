@@ -4,24 +4,24 @@ using UnityEngine;
 public class PlayerActionManager : NetworkBehaviour
 {
     private PlayerInventory playerInventory;
-    private PlayerController playerController;
+    private PlayerMachine playerMachine;
     [SerializeField] PlayerActionBehaviour[] actionBehaviours;
     [SerializeField] GameObject actionBehaviourContainer;
     public void Start()
     {
         playerInventory = GetComponent<PlayerInventory>();
-        playerController = GetComponent<PlayerController>();
+        playerMachine = GetComponent<PlayerMachine>();
         foreach (var behaviour in actionBehaviours)
         {
-            behaviour.LinkComponents(playerInventory, playerController);
+            behaviour.LinkComponents(playerInventory, playerMachine);
         }
         if (playerInventory == null)
         {
             Debug.LogError("PlayerActionManager: PlayerInventory component not found on the GameObject.");
         }
-        if (playerController == null)
+        if (playerMachine == null)
         {
-            Debug.LogError("PlayerActionManager: PlayerController component not found on the GameObject.");
+            Debug.LogError("PlayerActionManager: PlayerMachine component not found on the GameObject.");
         }
     }
 }

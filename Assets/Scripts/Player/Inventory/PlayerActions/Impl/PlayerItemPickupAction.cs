@@ -37,7 +37,7 @@ public class PlayerItemPickupAction : PlayerActionBehaviour
 
     public void DetectItem()
     {
-        Ray ray = new Ray(playerController.GetMainCamera().transform.position, playerController.GetMainCamera().transform.forward);
+        Ray ray = new Ray(playerController.MainCamera.transform.position, playerController.MainCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, 3f, pickupLayer))
         {
             if (hit.collider.TryGetComponent<ItemDataHandler>(out var itemHandler))

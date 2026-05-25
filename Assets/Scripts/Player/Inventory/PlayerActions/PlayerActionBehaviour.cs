@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerActionBehaviour : NetworkBehaviour
 {
     protected PlayerInventory playerInventory;
-    protected PlayerController playerController;
-    public void LinkComponents(PlayerInventory inventory, PlayerController controller)
+    protected PlayerMachine playerController;
+    public void LinkComponents(PlayerInventory inventory, PlayerMachine controller)
     {
         if (playerInventory != null || playerController != null)
         {
