@@ -22,6 +22,7 @@ public class InputManager : NetworkBehaviour
 
         jumpActionBinding.action.Enable();
         moveActionBinding.action.Enable();
+        mouseActionBinding.action.Enable();
 
         jumpActionBinding.action.performed += OnJumpPerformed;
         moveActionBinding.action.performed += OnMovePreformed;
@@ -62,6 +63,7 @@ public class InputManager : NetworkBehaviour
         mouseActionBinding.action.canceled -= OnMouseCanceled;        
         jumpActionBinding.action.Disable();
         moveActionBinding.action.Disable();
+        mouseActionBinding.action.Disable();
     }
 
     private void Update()
@@ -92,5 +94,10 @@ public class InputManager : NetworkBehaviour
     public Vector2 GetMovementInput()
     {
         return moveInput;
+    }
+
+    public Vector2 GetMouseInput()
+    {
+        return mouseInput;
     }
 }

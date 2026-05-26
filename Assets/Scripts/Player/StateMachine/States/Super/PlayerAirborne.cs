@@ -2,12 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAirborne : PlayerFunctionalState
+public class PlayerAirborne : PlayerStateTop
 {
     public PlayerAirborne(PlayerMachine playerMachine) : base(playerMachine) { }
 
     public override void Enter()
     {
+        base.Enter();
         if (Math.Abs(machine.InputManager.GetMovementInput().magnitude) > 0)
         {
             machine.ChangeState(PlayerState.MOVING_AIRBORNE);
@@ -19,10 +20,12 @@ public class PlayerAirborne : PlayerFunctionalState
     }
     public override void Exit()
     {
+        base.Exit();
         machine.InputManager.movePreformedAction -= HandleMove;
     }
     public override void Update()
     {
+        base.Update();
         if (machine.player.IsGrounded() && machine.player.GetVelocity().y <= 0f)
         {
             machine.ChangeState(PlayerState.GROUNDED);
@@ -30,6 +33,7 @@ public class PlayerAirborne : PlayerFunctionalState
     }
     public override void UpdatePhysics()
     {
+        base.UpdatePhysics();
         ApplyAirborneGravity();
     }
 

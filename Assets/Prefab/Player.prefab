@@ -2126,15 +2126,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2366742642785832338, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9997107
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2366742642785832338, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.024054322
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2366742642785832338, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2366742642785832338, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2366742642785832338, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 2.757
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2366742642785832338, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2141209380914920178, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}
       propertyPath: m_Layer
@@ -2491,7 +2503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1508579912
+  GlobalObjectIdHash: 3181209001
   InScenePlacedSourceGlobalObjectIdHash: 1508579912
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2689,7 +2701,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   jumpActionBinding: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   moveActionBinding: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  mouseActionBinding: {fileID: 0}
+  mouseActionBinding: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &6650017546079894532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2704,6 +2716,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   ShowTopMostFoldoutHeaderGroup: 1
   headRotation: {fileID: 5908367122620663796}
+  <MouseSensitivity>k__BackingField: 2
+  <Forward>k__BackingField: {x: 0, y: 0, z: 1}
+  <Right>k__BackingField: {x: 1, y: 0, z: 0}
 --- !u!4 &480644989540056171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8614681775621879311, guid: 0a1084eb067e3fc47b17867499f87f63, type: 3}

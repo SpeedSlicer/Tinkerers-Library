@@ -6,7 +6,14 @@ public class Player : NetworkBehaviour
 {
     CharacterController controller;
     [SerializeField] private Transform headRotation;
-
+    [field: SerializeField] public float MouseSensitivity { get; private set; } = 1.1f;
+    [field: SerializeField] public Vector3 Forward { get; private set; } = Vector3.forward;
+    [field: SerializeField] public Vector3 Right { get; private set; } = Vector3.right;
+    void Update()
+    {
+        Forward = this.transform.forward;
+        Right = this.transform.right;
+    }
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
@@ -16,10 +23,16 @@ public class Player : NetworkBehaviour
     {
         controller.Move(mV);
     }  
-    
+    public void Rotate(Vector3 rotate)
+    {
+        transform.Rotate(rotate);
+    }
     public void AngleHead(float degrees)
     {
-        headRotation.Rotate(0, Math.Clamp(degrees, -90, 90), 0);
+        float currentX = headRotation.localEulerAngles.x;
+        if (currentX > 180f) currentX -= 360f;
+        float newX = Mathf.Clamp(currentX + degrees, -90f, 90f);
+        headRotation.localEulerAngles = new Vector3(newX, headRotation.localEulerAngles.y, headRotation.localEulerAngles.z);
     }
     public bool IsGrounded()
     {

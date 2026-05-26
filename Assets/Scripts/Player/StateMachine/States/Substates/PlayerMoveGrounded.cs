@@ -32,7 +32,10 @@ public class PlayerMoveGrounded : PlayerGrounded
     {
         base.UpdatePhysics();
         Vector2 input = machine.InputManager.GetMovementInput();
-        Vector3 playerMovement = new Vector3(input.x * machine.Speed, machine.Velocity.y, input.y * machine.Speed);
+        Vector3 forwardMovement = machine.player.Forward * (input.y * machine.Speed);
+        Vector3 rightMovement = machine.player.Right * (input.x * machine.Speed);
+        Vector3 playerMovement = forwardMovement + rightMovement;
+        playerMovement.y = machine.Velocity.y; 
         machine.Velocity = playerMovement;
     }
 

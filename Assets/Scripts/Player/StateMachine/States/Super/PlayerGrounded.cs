@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerGrounded : PlayerFunctionalState
+public class PlayerGrounded : PlayerStateTop
 {
     bool isJumping;
     public PlayerGrounded(PlayerMachine playerMachine) : base(playerMachine)
@@ -11,6 +11,7 @@ public class PlayerGrounded : PlayerFunctionalState
 
     public override void Enter()
     {
+        base.Enter();
         isJumping = false;
         SpecificSetup();
         machine.InputManager.jumpAction += HandleJump;
@@ -45,6 +46,7 @@ public class PlayerGrounded : PlayerFunctionalState
 
     public override void Exit()
     {
+        base.Exit();
         machine.InputManager.jumpAction -= HandleJump;
         machine.InputManager.movePreformedAction -= HandleMove;
         isJumping = false;
@@ -52,6 +54,7 @@ public class PlayerGrounded : PlayerFunctionalState
 
     public override void UpdatePhysics()
     {
+        base.UpdatePhysics();
         if (machine.player.GetVelocity().y < 0f && machine.player.IsGrounded() && !isJumping)
         {
             SnapToGround();
@@ -64,6 +67,7 @@ public class PlayerGrounded : PlayerFunctionalState
 
     public override void Update()
     {
+        base.Update();
         if (!machine.player.IsGrounded())
         {
             machine.ChangeState(PlayerState.AIRBORNE);
