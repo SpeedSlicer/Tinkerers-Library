@@ -20,6 +20,9 @@ public class PlayerMachine : NetworkBehaviour
     public Player player { get; private set; }
     public GameObject MainCamera => mainCamera;
 
+    private Vector2 smoothMouseInput;
+    private const float MouseSmoothFactor = 12f;
+
     [field: SerializeField] public float Speed { get; private set; } = 10f;
     [field: SerializeField] public float Gravity { get; private set; } = -20f;
     [field: SerializeField] public float JumpHeight { get; private set; } = 5f;
@@ -62,8 +65,21 @@ public class PlayerMachine : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        HandleLook();
         activeState?.HandleInput();
         activeState?.Update();
+    }
+
+    private void HandleLook()
+    {
+        Vector2 rawMouseInput = InputManager?.GetMouseInput() ?? Vector2.zero;
+        smoothMouseInput = Vector2.Lerp(smoothMouseInput, rawMouseInput, Mathf.Clamp01(Time.deltaTime * MouseSmoothFactor));
+
+        if (smoothMouseInput.sqrMagnitude > 0.000001f)
+        {
+            player.Rotate(new Vector3(0, smoothMouseInput.x * player.MouseSensitivity, 0));
+            player.AngleHead(smoothMouseInput.y * player.MouseSensitivity);
+        }
     }
 
     void FixedUpdate()

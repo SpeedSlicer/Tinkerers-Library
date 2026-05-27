@@ -6,7 +6,7 @@ public class Player : NetworkBehaviour
 {
     CharacterController controller;
     [SerializeField] private Transform headRotation;
-    [field: SerializeField] public float MouseSensitivity { get; private set; } = 1.1f;
+    [field: SerializeField] public float MouseSensitivity { get; private set; } = 0.5f;
     [field: SerializeField] public Vector3 Forward { get; private set; } = Vector3.forward;
     [field: SerializeField] public Vector3 Right { get; private set; } = Vector3.right;
     void Update()
