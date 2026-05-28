@@ -130,8 +130,9 @@ GameObject:
   - component: {fileID: 84449436}
   - component: {fileID: 84449438}
   - component: {fileID: 84449437}
+  - component: {fileID: 84449439}
   m_Layer: 0
-  m_Name: Nezwork
+  m_Name: NezworkGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,6 +227,21 @@ MonoBehaviour:
     OldPrefabList: []
   RunInBackground: 1
   LogLevel: 1
+--- !u!114 &84449439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84449435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144b1a57abe5ee64ab022f6f2a0eb606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemRegistry
+  items:
+  - {fileID: 11400000, guid: f15f29ae90154418c8b20cff359333dc, type: 2}
+  - {fileID: 11400000, guid: acf10a9e967d7447d9bd5c1acb90d071, type: 2}
 --- !u!1 &441956658
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +326,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.35
+  m_fontSize: 52.45
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -782,8 +798,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -93.6104, y: -56.46363}
-  m_SizeDelta: {x: 124.6514, y: 27.3149}
+  m_AnchoredPosition: {x: -2.7715, y: -100.7752}
+  m_SizeDelta: {x: 306.3292, y: 115.9382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700468750
 MonoBehaviour:
@@ -915,8 +931,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -93.61, y: -25.6}
-  m_SizeDelta: {x: 124.65, y: 23.5599}
+  m_AnchoredPosition: {x: -2.771, y: 31.2668}
+  m_SizeDelta: {x: 306.33, y: 137.2933}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1829649778
 MonoBehaviour:
@@ -1096,7 +1112,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.05
+  m_fontSize: 100
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1160,7 +1176,6 @@ GameObject:
   - component: {fileID: 1962823978}
   - component: {fileID: 1962823977}
   - component: {fileID: 1962823976}
-  - component: {fileID: 1962823979}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1229,21 +1244,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1962823979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962823975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 144b1a57abe5ee64ab022f6f2a0eb606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemRegistry
-  items:
-  - {fileID: 11400000, guid: f15f29ae90154418c8b20cff359333dc, type: 2}
-  - {fileID: 11400000, guid: acf10a9e967d7447d9bd5c1acb90d071, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

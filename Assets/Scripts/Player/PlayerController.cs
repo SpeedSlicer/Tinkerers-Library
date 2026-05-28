@@ -101,4 +101,8 @@ public class PlayerController : NetworkBehaviour
             anim.SetBool("isJumping", false);
         }
     }
+    public Camera GetMainCamera()
+    {
+        return playerCam;
+    }
 }

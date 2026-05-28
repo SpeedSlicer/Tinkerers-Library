@@ -1,111 +1,158 @@
 using System;
-using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Events;
-
 public class PlayerInventory : NetworkBehaviour
 {
-    private readonly NetworkList<NetworkInventoryItem> inventory =
-        new NetworkList<NetworkInventoryItem>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-    
-    private readonly NetworkVariable<int> handItem = 
-        new NetworkVariable<int>(value: 0, readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Server);
-    public UnityEvent runTimeInventoryUpdateEvent;
-
-    [SerializeField] private PlayerItemRenderer playerItemRenderer;
-
-    public void Start()
-    {
-        playerItemRenderer = GetComponent<PlayerItemRenderer>();
-    }
+    NetworkList<NetworkInventoryItem> inventoryItems = new NetworkList<NetworkInventoryItem>();
+    NetworkVariable<int> handItem = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    int inventorySize = 2;
+    [SerializeField] PlayerHandRenderer playerHandRenderer;
+    [SerializeField] GameObject itemSpawnable;
     public override void OnNetworkSpawn()
     {
-        inventory.OnListChanged += OnInventoryChanged;
-    }
+        handItem.OnValueChanged += HandItemChanged;
+        inventoryItems.OnListChanged += InventoryChanged;
 
-    public override void OnNetworkDespawn()
-    {
-        inventory.OnListChanged -= OnInventoryChanged;
-        base.OnNetworkDespawn();
-    }
-
-    private void OnInventoryChanged(NetworkListEvent<NetworkInventoryItem> changeEvent)
-    {
-        Debug.Log($"Inventory updated. Type of change: {changeEvent.Type}");
-        runTimeInventoryUpdateEvent?.Invoke();
-        playerItemRenderer.UpdateHandItem(inventory[handItem.Value].ItemId);
-    }
-
-    public void AddItemServerOnly(NetworkInventoryItem nItem)
-    {
-        if (!IsServer) return; 
-
-        for (int i = 0; i < inventory.Count; i++)
+        if (IsServer)
         {
-            if (inventory[i].ItemId == nItem.ItemId)
+            if (inventoryItems.Count == 0)
             {
-                var item = inventory[i];
-                item.Quantity += nItem.Quantity;
-                inventory[i] = item;
-                return;
+                for (int i = 0; i < inventorySize; i++)
+                {
+                    inventoryItems.Add(new NetworkInventoryItem
+                    {
+                        ItemId = 0,
+                        Quantity = 0,
+                        ItemName = ""
+                    });
+                }
             }
         }
-        inventory.Add(nItem);
     }
-    [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
-    public void AddItemServerRpc(NetworkInventoryItem nItem)
+    private void InventoryChanged(NetworkListEvent<NetworkInventoryItem> changeEvent)
     {
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].ItemId == nItem.ItemId)
-            {
-                var item = inventory[i];
-                item.Quantity += nItem.Quantity;
-                inventory[i] = item;
-                return;
-            }
-        }
-
-        inventory.Add(nItem);
+        playerHandRenderer.ReloadHand();
     }
+
+    private void HandItemChanged(int previousValue, int newValue)
+    {
+        playerHandRenderer.ReloadHand();
+    }
+
+
 
     [ServerRpc(InvokePermission = RpcInvokePermission.Server)]
-    public void RemoveItemServerRpc(int itemId, int amount)
+    public void AddItemToInventoryServerRpc(NetworkInventoryItem itemToAdd)
     {
-        for (int i = 0; i < inventory.Count; i++)
+        AddItemServerOnly(itemToAdd);
+    }
+    public void AddItemServerOnly(NetworkInventoryItem itemToAdd)
+    {
+        if (!IsServer) return;
+        Debug.Log("Adding item");
+        Debug.Log($"Player Inventory: {inventoryItems}");
+        ItemData itemData = ItemRegistry.Instance.GetItem(itemToAdd.ItemId);
+        if (itemData != null)
         {
-            if (inventory[i].ItemId == itemId)
+            for (int i = 0; i < inventorySize; i++)
             {
-                var item = inventory[i];
-                item.Quantity -= amount;
-                if (item.Quantity <= 0)
+                if (itemData.IsStackable)
                 {
-                    inventory.RemoveAt(i);
+                    if (inventoryItems[i].ItemId == itemData.ItemId && inventoryItems[i].ItemName == itemToAdd.ItemName)
+                    {
+                        ItemData toAddTo = ItemRegistry.Instance.GetItem(inventoryItems[i].ItemId);
+                        if (inventoryItems[i].Quantity >= toAddTo.MaxStackSize)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (inventoryItems[i].Quantity + itemToAdd.Quantity <= toAddTo.MaxStackSize)
+                            {
+                                inventoryItems[i] = new NetworkInventoryItem
+                                {
+                                    ItemId = toAddTo.ItemId,
+                                    Quantity = inventoryItems[i].Quantity + itemToAdd.Quantity,
+                                    ItemName = inventoryItems[i].ItemName
+                                };
+                                return;
+                            }
+                            else
+                            {
+                                int needed = itemData.MaxStackSize - inventoryItems[i].Quantity;
+                                int leftover = itemToAdd.Quantity - needed;
+                                inventoryItems[i] = new NetworkInventoryItem
+                                {
+                                    ItemId = toAddTo.ItemId,
+                                    Quantity = inventoryItems[i].Quantity + needed,
+                                    ItemName = inventoryItems[i].ItemName
+                                };
+                                AddItemServerOnly(new NetworkInventoryItem
+                                {
+                                    ItemId = itemToAdd.ItemId,
+                                    ItemName = itemToAdd.ItemName,
+                                    Quantity = leftover
+                                });
+                                return;
+                            }
+                        }
+                    }
                 }
-                else
+                if (inventoryItems[i].ItemId == 0)
                 {
-                    inventory[i] = item;
+                    if (itemToAdd.Quantity <= itemData.MaxStackSize)
+                    {
+                        inventoryItems[i] = itemToAdd;
+                        return;
+                    }
+                    else if (itemToAdd.Quantity > itemData.MaxStackSize)
+                    {
+                        int amount = itemData.MaxStackSize;
+                        int leftover = itemToAdd.Quantity - itemData.MaxStackSize;
+                        inventoryItems[i] = new NetworkInventoryItem
+                        {
+                            ItemId = itemToAdd.ItemId,
+                            ItemName = itemToAdd.ItemName,
+                            Quantity = amount
+                        };
+                        AddItemServerOnly(new NetworkInventoryItem
+                        {
+                            ItemId = itemToAdd.ItemId,
+                            ItemName = itemToAdd.ItemName,
+                            Quantity = leftover
+                        });
+                        return;
+                    }
                 }
-                return;
             }
+            var go = Instantiate(itemSpawnable);
+            go.GetComponent<ItemDataHandler>().SetItemDataServer(itemToAdd);
+            go.transform.position = transform.position;
+            go.GetComponent<NetworkObject>().Spawn();
+            go.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 2, ForceMode.Impulse);
         }
+        else
+        {
+            return;
+        }
+        Debug.Log($"Player Inventory: {inventoryItems}");
+
+    }
+    public int GetHandSlotNumber()
+    {
+        return handItem.Value;
     }
 
-    [ServerRpc(InvokePermission = RpcInvokePermission.Owner)]
-    public void SetItemSlotServerRpc(int targetedSlot)
+    public void SetHandItem(int slot)
     {
-        handItem.Value = targetedSlot;
+        if (!IsOwner) return;
+        handItem.Value = slot;
     }
 
-    public ItemData GetItemInHand()
+    public ItemData GetHandItemData()
     {
-        int itemId = inventory[handItem.Value].ItemId;
-        return ItemRegistry.Instance.GetItem(itemId);
+        return ItemRegistry.Instance.GetItem(inventoryItems[handItem.Value].ItemId);
     }
 
-    public int GetItemIDInHand()
-    {
-        return inventory[handItem.Value].ItemId;
-    }
+
 }
