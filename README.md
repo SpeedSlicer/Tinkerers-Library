@@ -1,2 +1,3 @@
-# State Machine Test
-using unity to create a statemachine character controller
+# State Machine + Inventory Multiplayer Test
+using Unity to create a state machine character controller and inventory system
+
